@@ -34,7 +34,7 @@ jobs:
       # uses: actions/setup-java@v4
       #with:
       # java-version: '17.0.8' # Use the JDK version compatible with your project
-      #distribution: 'microsoft'
+      # distribution: 'microsoft'
 
       # Set up Android SDK
       #- name: Set up Android SDK
