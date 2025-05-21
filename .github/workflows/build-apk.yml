@@ -1,0 +1,55 @@
+name: Build React Native APK
+
+on:
+  push:
+    branches:
+      - master # Change to your desired branch, e.g., develop
+
+jobs:
+  build:
+    runs-on: self-hosted # Use your self-hosted runner
+
+    steps:
+      # Checkout the repository code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Node.js
+      #- name: Set up Node.js
+      # uses: actions/setup-node@v4
+      #with:
+      # node-version: '22' # Use the Node.js version compatible with your project
+
+      # Install Yarn (or npm if you prefer)
+      #- name: Install Yarn
+      #  run: npm install -g yarn
+
+      # Install project dependencies
+      - name: Install dependencies
+        run: yarn install
+        working-directory: ./
+
+      # Set up JDK for Android
+      #- name: Set up JDK
+      # uses: actions/setup-java@v4
+      #with:
+      # java-version: '17.0.8' # Use the JDK version compatible with your project
+      #distribution: 'microsoft'
+
+      # Set up Android SDK
+      #- name: Set up Android SDK
+      # uses: android-actions/setup-android@v3
+
+      # Build the APK
+      - name: Build APK
+        run: |
+          cd android
+          .\gradlew assembleRelease
+        working-directory: ./
+
+      # Upload the APK as an artifact
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/app-release.apk # Adjust for release if needed
